@@ -1,0 +1,2 @@
+module StatInkIfsHelper
+end

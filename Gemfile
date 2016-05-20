@@ -1,6 +1,10 @@
 source 'https://rubygems.org'
 
-
+ruby '2.2.2'
+gem 'bootstrap-sass'
+gem 'rest-client'
+gem 'haml-rails'
+gem 'jQuery-Validation-Engine-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use sqlite3 as the database for Active Record
@@ -12,7 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -34,6 +38,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'pry-rails'
+  gem 'pry-doc'
+  gem 'pry-byebug'
+  gem 'pry-stack_explorer'
+  gem 'minitest-stub_any_instance'
+  gem 'minitest-reporters'
   gem 'byebug'
 end
 
@@ -45,3 +55,6 @@ group :development do
   gem 'spring'
 end
 
+group :test do
+  gem 'webmock'
+end

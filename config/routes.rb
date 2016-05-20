@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'stat_ink_ifs/new'
+
+  post 'stat_ink_ifs/create'
+
+  get 'stat_ink_ifs/index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,61 @@
+- gsave = "<span class='glyphicon glyphicon-saved' aria-hidden='true' />"
+
+.container-fruid
+  .col-xs-12.col-md-8
+    %h1
+      = @gamemode
+    = form_tag(stat_ink_ifs_create_path, remote: true, class: "form-horizontal", id: "form-main") do
+      .form-group
+        = label_tag :weapon, "ブキ", class: "col-sm-2 control-label"
+        .col-sm-10= select_tag 'weapon', options_for_select(@weapons), class: "form-control"
+      .form-group
+        = label_tag :stages, "ステージ", class: "col-sm-2 control-label"
+        .col-sm-10
+          .btn-group.btn-group-justified{"data-toggle" => "buttons"}
+            - @stages.each do |i|
+              %label.btn.btn-success
+                = radio_button_tag :stages, i[1], false, autocomplete: :off, class: "validate[required]"
+                = i[0]
+      .form-group
+        = label_tag :win, "カチマケ", class: "col-sm-2 control-label"
+        .col-sm-10
+          .btn-group.btn-group-justified{"data-toggle" => "buttons"}
+            %label.btn.btn-info
+              = radio_button_tag :win,  :win, false, autocomplete: :off, class: "validate[required]"
+              \カチ
+            %label.btn.btn-danger
+              = radio_button_tag :win, :lose, false, autocomplete: :off, class: "validate[required]"
+              \マケ
+      - if @gm != :ranked
+        .col-sm-2
+        .col-sm-10
+          .form-group
+            .input-group
+              %span.input-group-addon 塗り
+              = number_field_tag :paint, nil, class: "form-control validate[required,custom[integer]]"
+      .col-sm-2.col-xs-hidden
+      .col-sm-5.col-xs-6
+        .form-group
+          .input-group
+            %span.input-group-addon キル
+            = number_field_tag :kill, nil, class: "form-control validate[required,custom[integer]]"
+      .col-sm-5.col-xs-6
+        .form-group
+          .input-group
+            %span.input-group-addon デス
+            = number_field_tag :death, nil, class: "form-control validate[required,custom[integer]]"
+      - if @gm == :ranked
+        .col-sm-2.col-xs-hidden
+        .col-sm-5.col-xs-6
+          .form-group
+            .input-group
+              %span#rank-old.input-group-addon S+
+              = number_field_tag :rank_old, nil, class: "form-control validate[required,custom[integer]]"
+        .col-sm-5.col-xs-6
+          .form-group
+            .input-group
+              %span#rank-pm.input-group-addon +
+              = number_field_tag :rank, nil, class: "form-control validate[required,custom[integer]]"
+      .col-sm-2
+      .col-sm-10
+        = button_tag raw(gsave) + " ホゾン", class: "btn btn-lg btn-primary btn-block"
