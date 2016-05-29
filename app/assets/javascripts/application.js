@@ -11,9 +11,11 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.cookie
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap-sprockets
+//= require select2
+//= require turbolinks
 //= require jquery.validationEngine-en
 //= require jquery.validationEngine
 //= require_tree .

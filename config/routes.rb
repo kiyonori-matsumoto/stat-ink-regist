@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   get 'stat_ink_ifs/new'
 
-  post 'stat_ink_ifs/create'
+  post 'stat_ink_ifs/create', as: :create
 
-  get 'stat_ink_ifs/index'
+  get 'stat_ink_ifs/index', as: :index
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

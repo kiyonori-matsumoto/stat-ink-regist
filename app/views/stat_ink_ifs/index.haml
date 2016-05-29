@@ -1,5 +1,19 @@
 %h1 センセキキロク
 = form_tag(stat_ink_ifs_new_path, method: :get) do
-  = submit_tag("ガチマッチ", name: :ranked, class: "btn btn-primary btn-block")
-  = submit_tag("ナワバリバトル", name: :regular, class: "btn btn-primary btn-block")
-  = submit_tag("フェスマッチ", name: :festival, class: "btn btn-primary btn-block")
+  = submit_tag("ガチマッチ", name: :ranked, class: "btn btn-info btn-block")
+  = submit_tag("ナワバリバトル", name: :regular, class: "btn btn-info btn-block")
+  = submit_tag("フェスマッチ", name: :festival, class: "btn btn-info btn-block")
+
+%h2
+  %a{href: '#setting-form', 'data-toggle' => 'collapse'}
+    セッテイ
+    %span.caret
+.collapse#setting-form
+  .form-group
+    %label.control-label stat_ink id
+    = text_field_tag :stat_ink_id, nil, class: "form-control"
+  .form-group
+    %label.control-label stat_ink API KEY
+    = text_field_tag :stat_ink_key, nil, class: "form-control"
+  .form-group
+    = button_tag raw(gsave) + " ホゾン", class: "btn btn-primary bgn-block", id: "stat_ink_id_save"

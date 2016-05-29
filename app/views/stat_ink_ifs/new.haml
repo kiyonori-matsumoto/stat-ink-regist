@@ -1,30 +1,41 @@
-- gsave = "<span class='glyphicon glyphicon-saved' aria-hidden='true' />"
+-# - gsave = "<span class='glyphicon glyphicon-saved' aria-hidden='true' />"
 
 .container-fruid
   .col-xs-12.col-md-8
-    %h1
-      = @gamemode
-    = form_tag(stat_ink_ifs_create_path, remote: true, class: "form-horizontal", id: "form-main") do
+    .page-header
+      %h1
+        = @gamemode
+        %small
+          = @gamemode_sub
+      -# = form_tag(:create, remote: true, format: :json,
+    = form_tag("https://stat.ink/api/v1/battle", remote: true, format: :json,
+      class: "form-horizontal", id: "form-main") do
+      = hidden_field_tag :apikey
+      = hidden_field_tag :lobby, @lobby
+      = hidden_field_tag :rule, @rule
+      = hidden_field_tag :rank_after
+      = hidden_field_tag :rank_exp_after
+      -# = hidden_field_tag :rank, "", name: "dropdown-value"
       .form-group
         = label_tag :weapon, "ブキ", class: "col-sm-2 control-label"
-        .col-sm-10= select_tag 'weapon', options_for_select(@weapons), class: "form-control"
+        .col-sm-10= select_tag 'weapon', grouped_options_for_select(@weapons), class: "form-control"
       .form-group
-        = label_tag :stages, "ステージ", class: "col-sm-2 control-label"
+        = label_tag :map, "ステージ", class: "col-sm-2 control-label"
         .col-sm-10
           .btn-group.btn-group-justified{"data-toggle" => "buttons"}
             - @stages.each do |i|
               %label.btn.btn-success
-                = radio_button_tag :stages, i[1], false, autocomplete: :off, class: "validate[required]"
+                = radio_button_tag :map, i[1], false, autocomplete: :off, class: "validate[required]"
                 = i[0]
       .form-group
-        = label_tag :win, "カチマケ", class: "col-sm-2 control-label"
+        = label_tag :result, "カチマケ", class: "col-sm-2 control-label"
         .col-sm-10
           .btn-group.btn-group-justified{"data-toggle" => "buttons"}
             %label.btn.btn-info
-              = radio_button_tag :win,  :win, false, autocomplete: :off, class: "validate[required]"
+              = radio_button_tag :result,  :win, false, autocomplete: :off, class: "validate[required]"
               \カチ
             %label.btn.btn-danger
-              = radio_button_tag :win, :lose, false, autocomplete: :off, class: "validate[required]"
+              = radio_button_tag :result, :lose, false, autocomplete: :off, class: "validate[required]"
               \マケ
       - if @gm != :ranked
         .col-sm-2
@@ -32,9 +43,8 @@
           .form-group
             .input-group
               %span.input-group-addon 塗り
-              = number_field_tag :paint, nil, class: "form-control validate[required,custom[integer]]"
-      .col-sm-2.col-xs-hidden
-      .col-sm-5.col-xs-6
+              = number_field_tag :my_point, nil, class: "form-control validate[required,custom[integer]]"
+      .col-sm-5.col-xs-6.col-sm-offset-2
         .form-group
           .input-group
             %span.input-group-addon キル
@@ -45,17 +55,23 @@
             %span.input-group-addon デス
             = number_field_tag :death, nil, class: "form-control validate[required,custom[integer]]"
       - if @gm == :ranked
-        .col-sm-2.col-xs-hidden
-        .col-sm-5.col-xs-6
-          .form-group
-            .input-group
-              %span#rank-old.input-group-addon S+
-              = number_field_tag :rank_old, nil, class: "form-control validate[required,custom[integer]]"
-        .col-sm-5.col-xs-6
-          .form-group
-            .input-group
-              %span#rank-pm.input-group-addon +
-              = number_field_tag :rank, nil, class: "form-control validate[required,custom[integer]]"
-      .col-sm-2
-      .col-sm-10
-        = button_tag raw(gsave) + " ホゾン", class: "btn btn-lg btn-primary btn-block"
+        -# .col-sm-5.col-xs-6.col-sm-offset-2
+        .form-group
+          %label.col-sm-2.control-label ウデマエ
+          .col-sm-10
+            -# .input-group
+            .row
+              .col-xs-4
+                = select_tag :rank, options_for_select(@ranks), class: "form-control", tabindex: -1
+              .col-xs-3
+                = number_field_tag :rank_exp, nil, class: "form-control validate[required,custom[integer]]", tabindex: -1
+              .col-xs-2
+                %p.form-control-static#result_add
+                  \&nbsp;
+              .col-xs-3
+                = number_field_tag :rank_exp_add, nil, class: "form-control validate[required,custom[integer]]"
+
+      .col-sm-5.col-sm-offset-2.col-xs-6
+        = button_tag raw(gsave) + " ホゾン", class: "btn btn-lg btn-primary btn-block", id: "save_button"
+      .col-sm-5.col-xs-6
+        = link_to "戻る", :index, class: "btn btn-lg btn-danger btn-block"
